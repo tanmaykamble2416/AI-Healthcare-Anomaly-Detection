@@ -1,28 +1,25 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-print("\nHealthcare Dataset Validation Started\n")
+print("Starting Exploratory Data Analysis")
 
-# Load dataset
 data = pd.read_csv("data/patient_vitals.csv")
 
-# 1. Dataset preview
-print("Dataset Preview (first 5 rows):\n")
-print(data.head().to_string(index=False))
+vital_features = [
+    "Heart Rate",
+    "Oxygen Saturation",
+    "Body Temperature",
+    "Systolic Blood Pressure",
+    "Diastolic Blood Pressure"
+]
 
-# 2. Dataset shape and size
-print("\nDataset Shape (Rows, Columns):")
-print(data.shape)
+plt.figure(figsize=(12,8))
 
-# 3. Check feature availability
-print("\nAvailable Features:")
-print(list(data.columns))
+for i, feature in enumerate(vital_features, 1):
+    plt.subplot(2,3,i)
+    sns.histplot(data[feature], bins=40, kde=True)
+    plt.title(feature)
 
-# 4. Missing values check
-print("\nMissing Values Check:")
-print(data.isnull().sum())
-
-# 5. Numerical range validation
-print("\nStatistical Summary (Range Consistency Check):")
-print(data.describe())
-
-print("\nDataset validation completed successfully.")
+plt.tight_layout()
+plt.show()
