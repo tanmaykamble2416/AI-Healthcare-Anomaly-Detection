@@ -6,7 +6,7 @@ print("\nActivity 2.3: Feature Scaling\n")
 # Load dataset
 data = pd.read_csv("data/patient_vitals.csv")
 
-# Selected features
+# Selected features from Activity 2.2
 selected_features = [
     "Heart Rate",
     "Respiratory Rate",
@@ -18,8 +18,11 @@ selected_features = [
     "Derived_MAP"
 ]
 
-# Extract vital features
+# Extract selected features
 df_vitals = data[selected_features]
+
+print("Original Feature Preview:")
+print(df_vitals.head())
 
 # Initialize scaler
 scaler = MinMaxScaler()
@@ -27,13 +30,13 @@ scaler = MinMaxScaler()
 # Apply scaling
 scaled_vitals = scaler.fit_transform(df_vitals)
 
-# Convert back to dataframe
+# Convert scaled data back to DataFrame
 df_scaled = pd.DataFrame(
     scaled_vitals,
     columns=df_vitals.columns
 )
 
-print("Scaled Feature Preview:")
+print("\nScaled Feature Preview:")
 print(df_scaled.head())
 
 print("\nScaled Feature Info:")
