@@ -1,11 +1,12 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
-print("\nStarting Feature Selection...\n")
+print("\nActivity 2.3: Feature Scaling\n")
 
 # Load dataset
 data = pd.read_csv("data/patient_vitals.csv")
 
-# Selected features for anomaly detection
+# Selected features
 selected_features = [
     "Heart Rate",
     "Respiratory Rate",
@@ -17,14 +18,23 @@ selected_features = [
     "Derived_MAP"
 ]
 
-# Create feature dataset
-feature_data = data[selected_features]
+# Extract vital features
+df_vitals = data[selected_features]
 
-print("Selected Features:")
-print(selected_features)
+# Initialize scaler
+scaler = MinMaxScaler()
 
-print("\nFeature Dataset Shape:")
-print(feature_data.shape)
+# Apply scaling
+scaled_vitals = scaler.fit_transform(df_vitals)
 
-print("\nPreview of Selected Feature Data:")
-print(feature_data.head())
+# Convert back to dataframe
+df_scaled = pd.DataFrame(
+    scaled_vitals,
+    columns=df_vitals.columns
+)
+
+print("Scaled Feature Preview:")
+print(df_scaled.head())
+
+print("\nScaled Feature Info:")
+print(df_scaled.info())
