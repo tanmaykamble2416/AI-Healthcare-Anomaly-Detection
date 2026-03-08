@@ -1,12 +1,17 @@
 import pandas as pd
+import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
-print("\nActivity 2.3: Feature Scaling\n")
+print("\nAI Healthcare Anomaly Detection Pipeline\n")
 
-# Load dataset
+# ---------------------------
+# Load Dataset
+# ---------------------------
 data = pd.read_csv("data/patient_vitals.csv")
 
-# Selected features from Activity 2.2
+# ---------------------------
+# Feature Selection
+# ---------------------------
 selected_features = [
     "Heart Rate",
     "Respiratory Rate",
@@ -18,19 +23,18 @@ selected_features = [
     "Derived_MAP"
 ]
 
-# Extract selected features
 df_vitals = data[selected_features]
 
-print("Original Feature Preview:")
+print("Feature preview:")
 print(df_vitals.head())
 
-# Initialize scaler
+# ---------------------------
+# Feature Scaling (Activity 2.3)
+# ---------------------------
 scaler = MinMaxScaler()
 
-# Apply scaling
 scaled_vitals = scaler.fit_transform(df_vitals)
 
-# Convert scaled data back to DataFrame
 df_scaled = pd.DataFrame(
     scaled_vitals,
     columns=df_vitals.columns
@@ -39,5 +43,22 @@ df_scaled = pd.DataFrame(
 print("\nScaled Feature Preview:")
 print(df_scaled.head())
 
-print("\nScaled Feature Info:")
-print(df_scaled.info())
+# ---------------------------
+# Activity 3.1 Temporal Modeling
+# ---------------------------
+print("\nActivity 3.1: Temporal Modeling (Sliding Window)\n")
+
+window_size = 10
+
+data_array = df_scaled.values
+
+sequences = []
+
+for i in range(len(data_array) - window_size):
+    window = data_array[i:i + window_size]
+    sequences.append(window)
+
+sequences = np.array(sequences)
+
+print("Temporal sequences created successfully.")
+print("Sequence shape:", sequences.shape)
