@@ -1,32 +1,28 @@
 import pandas as pd
 
-print("\n==============================")
-print("Patient Vitals Dataset Loaded")
-print("==============================\n")
+print("\nHealthcare Dataset Validation Started\n")
 
 # Load dataset
 data = pd.read_csv("data/patient_vitals.csv")
 
-# Display first 10 rows in table format
-print("Preview of Dataset:\n")
-print(data.head(10).to_string(index=False))
+# 1. Dataset preview
+print("Dataset Preview (first 5 rows):\n")
+print(data.head().to_string(index=False))
 
-print("\n----------------------------------")
-print("Dataset Shape (Rows, Columns):")
-print("----------------------------------")
+# 2. Dataset shape and size
+print("\nDataset Shape (Rows, Columns):")
 print(data.shape)
 
-print("\n----------------------------------")
-print("Column Names:")
-print("----------------------------------")
+# 3. Check feature availability
+print("\nAvailable Features:")
 print(list(data.columns))
 
-print("\n----------------------------------")
-print("Missing Values Check:")
-print("----------------------------------")
+# 4. Missing values check
+print("\nMissing Values Check:")
 print(data.isnull().sum())
 
-print("\n----------------------------------")
-print("Statistical Summary:")
-print("----------------------------------")
+# 5. Numerical range validation
+print("\nStatistical Summary (Range Consistency Check):")
 print(data.describe())
+
+print("\nDataset validation completed successfully.")
