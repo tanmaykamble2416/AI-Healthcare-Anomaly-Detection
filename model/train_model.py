@@ -113,3 +113,49 @@ print("\nModel training completed.")
 autoencoder.save("model/autoencoder_model.h5")
 
 print("Model saved successfully.")
+
+
+# ------------------------------------------------
+# 8. Activity 3.3 – Anomaly Scoring & Classification
+# ------------------------------------------------
+print("\nActivity 3.3: Anomaly Scoring & Severity Classification\n")
+
+# Reconstruct the training data
+reconstructed = autoencoder.predict(X_train)
+
+# Calculate reconstruction error (Mean Squared Error)
+reconstruction_error = np.mean((X_train - reconstructed) ** 2, axis=1)
+
+# Convert to DataFrame for analysis
+error_df = pd.DataFrame({
+    "reconstruction_error": reconstruction_error
+})
+
+# Determine anomaly threshold (for example: 95th percentile)
+threshold = np.percentile(reconstruction_error, 95)
+
+print("Anomaly detection threshold:", threshold)
+
+# Label anomalies
+error_df["is_anomaly"] = error_df["reconstruction_error"] > threshold
+
+# Severity classification
+def classify_severity(err):
+    if err > threshold * 2:
+        return "High"
+    elif err > threshold * 1.5:
+        return "Medium"
+    elif err > threshold:
+        return "Low"
+    else:
+        return "Normal"
+
+error_df["severity"] = error_df["reconstruction_error"].apply(classify_severity)
+
+# Preview results
+print("\nSample anomaly scoring results:")
+print(error_df.head(10))
+
+# Count anomalies
+print("\nAnomaly summary:")
+print(error_df["severity"].value_counts())
