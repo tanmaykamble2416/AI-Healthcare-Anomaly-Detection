@@ -1,21 +1,32 @@
 import pandas as pd
 
-print("Starting dataset validation...")
+print("\n==============================")
+print("Patient Vitals Dataset Loaded")
+print("==============================\n")
 
 # Load dataset
 data = pd.read_csv("data/patient_vitals.csv")
 
-print("\nFirst 5 rows:")
-print(data.head())
+# Display first 10 rows in table format
+print("Preview of Dataset:\n")
+print(data.head(10).to_string(index=False))
 
-print("\nDataset shape:")
+print("\n----------------------------------")
+print("Dataset Shape (Rows, Columns):")
+print("----------------------------------")
 print(data.shape)
 
-print("\nColumn names:")
-print(data.columns)
+print("\n----------------------------------")
+print("Column Names:")
+print("----------------------------------")
+print(list(data.columns))
 
-print("\nMissing values:")
+print("\n----------------------------------")
+print("Missing Values Check:")
+print("----------------------------------")
 print(data.isnull().sum())
 
-print("\nStatistical summary:")
+print("\n----------------------------------")
+print("Statistical Summary:")
+print("----------------------------------")
 print(data.describe())
